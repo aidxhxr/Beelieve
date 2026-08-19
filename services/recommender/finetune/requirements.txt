@@ -1,11 +1,11 @@
 # Fine-tuning environment (single 24 GB GPU). Not installed in the service image.
-torch>=2.3,<3.0
-transformers>=4.43,<5.0
-datasets>=2.20,<3.0
-peft>=0.11,<1.0
-bitsandbytes>=0.43,<1.0
-trl>=0.9,<1.0
-accelerate>=0.31,<1.0
-huggingface_hub>=0.24,<1.0
-sentencepiece>=0.2,<1.0
-protobuf>=4.25,<6.0
+torch>=2.13.0,<3.0
+transformers>=5.15.0,<6.0
+datasets>=5.0.1,<6.0
+peft>=0.20.0,<1.0
+bitsandbytes>=0.50.1,<1.0
+trl>=1.10.0,<2.0
+accelerate>=1.14.0,<2.0
+huggingface_hub>=1.27.0,<2.0
+sentencepiece>=0.2.2,<1.0
+protobuf>=7.35.1,<8.0

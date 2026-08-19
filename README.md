@@ -73,6 +73,11 @@ docker compose --profile dev up -d hive-simulator   # synthetic hives for local 
 
 Dashboard at http://localhost:3030 (demo login `demo@beelieve.kz` / `demo1234`),
 API docs at http://localhost:8000/docs, recommender at http://localhost:8100/docs.
+There's also a Makefile (`make up`, `make dev`, `make test`, `make lint`,
+`make typecheck`, `make loadtest`); CI runs ruff, mypy and the per-service test
+suites on every push. `scripts/loadtest.py` floods the ingestion bridge with
+synthetic telemetry (optionally a slice of malformed payloads) to watch the
+pipeline and DLQ under pressure.
 
 To train the models:
 

@@ -11,4 +11,6 @@ models/artifacts/*.txt
 *.lgb
 .pytest_cache/
 .mypy_cache/
+.ruff_cache/
+*.log
 data/generated/

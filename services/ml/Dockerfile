@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 # libgomp1: OpenMP runtime required by LightGBM wheels.
 RUN apt-get update \

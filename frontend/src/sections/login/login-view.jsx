@@ -15,6 +15,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
 
+import { login } from 'src/api';
+
 import { bgGradient } from 'src/theme/css';
 
 import Iconify from 'src/components/iconify';
@@ -28,18 +30,47 @@ export default function LoginView() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleClick = () => {
-    router.push('/dashboard');
+  const [email, setEmail] = useState('');
+
+  const [password, setPassword] = useState('');
+
+  const [error, setError] = useState('');
+
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      await login(email, password);
+      router.push('/');
+    } catch (err) {
+      if (err.status) {
+        setError('Неверный email или пароль');
+      } else {
+        // Backend unreachable — continue in offline demo mode.
+        router.push('/');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const renderForm = (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <TextField
+          name="email"
+          label="Email address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
         <TextField
           name="password"
           label="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -59,12 +90,19 @@ export default function LoginView() {
         </Link>
       </Stack>
 
+      {error && (
+        <Typography variant="body2" color="error" sx={{ mb: 2 }}>
+          {error}
+        </Typography>
+      )}
+
       <LoadingButton
         fullWidth
         size="large"
         type="submit"
         variant="contained"
         color="inherit"
+        loading={loading}
         onClick={handleClick}
       >
         Login

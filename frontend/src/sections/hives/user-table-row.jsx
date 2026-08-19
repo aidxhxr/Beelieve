@@ -22,12 +22,22 @@ function getColor(status) {
   return 'default';
 }
 
+function riskColor(risk) {
+  if (risk == null) return 'default';
+  if (risk >= 0.7) return 'error';
+  if (risk >= 0.35) return 'warning';
+  return 'success';
+}
+
+const fmt = (v, unit, digits = 1) => (v == null ? '—' : `${v.toFixed(digits)}${unit}`);
+
 export default function UserTableRow({
   selected,
   name,
-  company,
-  role,
-  isVerified,
+  temp,
+  humidity,
+  weight,
+  swarmRisk,
   status,
   handleClick,
 }) {
@@ -56,11 +66,17 @@ export default function UserTableRow({
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
+        <TableCell>{fmt(temp, '°C')}</TableCell>
 
-        <TableCell>{role}</TableCell>
+        <TableCell>{fmt(humidity, '%', 0)}</TableCell>
 
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
+        <TableCell>{fmt(weight, ' кг')}</TableCell>
+
+        <TableCell>
+          <Label color={riskColor(swarmRisk)}>
+            {swarmRisk == null ? '—' : `${Math.round(swarmRisk * 100)}%`}
+          </Label>
+        </TableCell>
 
         <TableCell>
           <Label color={getColor(status)}>{status}</Label>
@@ -98,11 +114,12 @@ export default function UserTableRow({
 }
 
 UserTableRow.propTypes = {
-  company: PropTypes.string,
   handleClick: PropTypes.func,
-  isVerified: PropTypes.bool,
+  humidity: PropTypes.number,
   name: PropTypes.string,
-  role: PropTypes.string,
   selected: PropTypes.bool,
   status: PropTypes.string,
+  swarmRisk: PropTypes.number,
+  temp: PropTypes.number,
+  weight: PropTypes.number,
 };

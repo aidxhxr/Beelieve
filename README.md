@@ -20,9 +20,9 @@ has raised over $30,000 in grants and prizes (Samsung Innovations, UNESCO
 Startups, the KZ Ministry of Ecology). The pipeline has processed 500,000+
 sensor datapoints so far.
 
-A note on the history: most of this was written earlier and lived only on my
-machine — I never got around to pushing it. This repo is me finally putting it
-on GitHub, so the commit history starts much later than the actual work did.
+A note on the history: this project was completed a while ago but lived only on
+my machine — I just never uploaded it. This repo is me finally putting it on
+GitHub, so the commit history starts much later than the actual work did.
 
 ## Architecture
 

@@ -14,7 +14,7 @@ import json
 import logging
 import signal
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from types import FrameType
 from typing import Any
 
@@ -75,7 +75,7 @@ def load_scorer(settings: Settings) -> MLScorer | HeuristicScorer:
 
 
 def _utc_now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+    return datetime.now(UTC).isoformat(timespec="seconds").replace("+00:00", "Z")
 
 
 def _on_delivery(err: Any, msg: Message) -> None:

@@ -71,7 +71,7 @@ def _split(df: pd.DataFrame, valid_frac: float, seed: int) -> tuple[pd.DataFrame
 def _class_weights(labels: np.ndarray) -> np.ndarray:
     """Per-sample inverse-frequency weights, normalized to mean 1."""
     classes, counts = np.unique(labels, return_counts=True)
-    weight_by_class = {c: len(labels) / (len(classes) * n) for c, n in zip(classes, counts)}
+    weight_by_class = {c: len(labels) / (len(classes) * n) for c, n in zip(classes, counts, strict=False)}
     weights = np.array([weight_by_class[label] for label in labels], dtype=np.float64)
     return weights / weights.mean()
 
@@ -156,7 +156,7 @@ def train_anomaly(train_df: pd.DataFrame, valid_df: pd.DataFrame, rounds: int, p
     metrics: dict[str, Any] = {
         "accuracy": float(accuracy_score(y_valid, pred)),
         "macro_f1": float(f1_score(y_valid, pred, average="macro", zero_division=0)),
-        "f1_per_class": {kind: float(score) for kind, score in zip(ANOMALY_KINDS, per_class_f1)},
+        "f1_per_class": {kind: float(score) for kind, score in zip(ANOMALY_KINDS, per_class_f1, strict=False)},
         "best_iteration": int(booster.best_iteration or 0),
     }
     logger.info("anomaly head: %s", metrics)
@@ -165,7 +165,7 @@ def train_anomaly(train_df: pd.DataFrame, valid_df: pd.DataFrame, rounds: int, p
 
 def _importance(booster: lgb.Booster) -> dict[str, float]:
     gains = booster.feature_importance(importance_type="gain")
-    return {name: float(gain) for name, gain in sorted(zip(FEATURE_COLUMNS, gains), key=lambda kv: -kv[1])}
+    return {name: float(gain) for name, gain in sorted(zip(FEATURE_COLUMNS, gains, strict=False), key=lambda kv: -kv[1])}
 
 
 def main() -> None:

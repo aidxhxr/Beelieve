@@ -7,13 +7,13 @@ import signal
 import sys
 import threading
 from types import FrameType
-from typing import Any
+from typing import Any, cast
 
 import paho.mqtt.client as mqtt
 from confluent_kafka import Producer
 
 from app import __version__
-from app.bridge import Bridge
+from app.bridge import Bridge, ProducerLike
 from app.config import Settings
 
 logger = logging.getLogger("beelieve.ingestion")
@@ -109,7 +109,8 @@ def main() -> int:
 
     producer = build_producer(settings)
     bridge = Bridge(
-        producer,
+        # confluent-kafka's stubs use a wider produce() signature than we call.
+        cast("ProducerLike", producer),
         raw_topic=settings.kafka_raw_topic,
         dlq_topic=settings.kafka_dlq_topic,
         alerts_topic=settings.kafka_alerts_topic,

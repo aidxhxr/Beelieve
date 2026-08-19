@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from uuid import uuid4
 
 import pytest
@@ -22,7 +22,7 @@ from app.models import (
     WSEnvelope,
 )
 
-NOW = datetime(2026, 8, 18, 12, 0, 0, tzinfo=timezone.utc)
+NOW = datetime(2026, 8, 18, 12, 0, 0, tzinfo=UTC)
 
 
 class TestAuthModels:

@@ -17,7 +17,7 @@ from __future__ import annotations
 import enum
 import math
 import random
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any, Final
 
 BAND_NAMES: Final[tuple[str, ...]] = (
@@ -89,9 +89,9 @@ class SimulatedHive:
     def sample(self, now: datetime | None = None) -> dict[str, Any]:
         """Generate one telemetry payload (contract-shaped JSON-able dict)."""
         if now is None:
-            now = datetime.now(timezone.utc)
+            now = datetime.now(UTC)
         elif now.tzinfo is None:
-            now = now.replace(tzinfo=timezone.utc)
+            now = now.replace(tzinfo=UTC)
 
         dt_days = self._advance_clock(now)
         local_h = (
@@ -205,7 +205,7 @@ class SimulatedHive:
 
         noisy = [w * math.exp(self._rng.gauss(0.0, 0.08)) for w in weights]
         total = sum(noisy)
-        bands = {name: round(w / total, 3) for name, w in zip(BAND_NAMES, noisy)}
+        bands = {name: round(w / total, 3) for name, w in zip(BAND_NAMES, noisy, strict=False)}
         return _clamp(level, 30.0, 90.0), bands
 
     def _co2(self, daylight: float) -> float:
@@ -262,4 +262,4 @@ def _bell(x: float, *, center: float, width: float) -> float:
 
 
 def _blend(a: tuple[float, ...], b: tuple[float, ...], t: float) -> list[float]:
-    return [ai * (1.0 - t) + bi * t for ai, bi in zip(a, b)]
+    return [ai * (1.0 - t) + bi * t for ai, bi in zip(a, b, strict=False)]

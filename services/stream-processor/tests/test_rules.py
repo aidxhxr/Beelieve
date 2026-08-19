@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from app.rules import AlertDebouncer, RuleAlert, evaluate_reading
 
-NOW = datetime(2026, 8, 18, 12, 0, 0, tzinfo=timezone.utc)
+NOW = datetime(2026, 8, 18, 12, 0, 0, tzinfo=UTC)
 
 NO_FEATURES: dict[str, object] = {"weight_delta_1h": None}
 

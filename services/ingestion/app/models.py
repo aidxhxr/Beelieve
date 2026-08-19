@@ -8,7 +8,7 @@ whole reading.
 from __future__ import annotations
 
 import math
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -53,7 +53,7 @@ class TelemetryPayload(BaseModel):
         """Require a timezone-aware ISO-8601 timestamp; normalize to UTC."""
         if value.tzinfo is None or value.tzinfo.utcoffset(value) is None:
             raise ValueError("ts must be a timezone-aware ISO-8601 UTC timestamp")
-        return value.astimezone(timezone.utc)
+        return value.astimezone(UTC)
 
     @field_validator("audio_bands")
     @classmethod
@@ -102,11 +102,11 @@ class Alert(BaseModel):
 def isoformat_utc(value: datetime) -> str:
     """Render a datetime as ISO-8601 UTC with a ``Z`` suffix."""
     if value.tzinfo is None:
-        value = value.replace(tzinfo=timezone.utc)
-    return value.astimezone(timezone.utc).isoformat(timespec="milliseconds").replace(
+        value = value.replace(tzinfo=UTC)
+    return value.astimezone(UTC).isoformat(timespec="milliseconds").replace(
         "+00:00", "Z"
     )
 
 
 def utc_now() -> datetime:
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)

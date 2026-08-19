@@ -225,7 +225,7 @@ async def websocket_endpoint(websocket: WebSocket, token: str = Query(...)) -> N
         while True:
             try:
                 text = await asyncio.wait_for(websocket.receive_text(), timeout=PING_INTERVAL_S)
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 # Keepalive: application-level ping; any client message counts
                 # as liveness, and a dead peer will fail the send.
                 await websocket.send_json({"type": "ping", "data": {}})

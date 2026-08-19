@@ -11,9 +11,10 @@ import logging
 import sys
 import time
 import uuid
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from datetime import datetime, timezone
-from typing import Any, AsyncIterator, Literal
+from datetime import UTC, datetime
+from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException, Query
 from huggingface_hub import InferenceClient
@@ -40,7 +41,7 @@ from app.prompts import DEFAULT_LOCALE, SUPPORTED_LOCALES, build_messages
 class JsonFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         payload: dict[str, Any] = {
-            "ts": datetime.fromtimestamp(record.created, tz=timezone.utc).isoformat(),
+            "ts": datetime.fromtimestamp(record.created, tz=UTC).isoformat(),
             "level": record.levelname.lower(),
             "logger": record.name,
             "msg": record.getMessage(),

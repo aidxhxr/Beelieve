@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any
 from uuid import UUID
 
@@ -56,7 +56,7 @@ def create_access_token(
     settings = get_settings()
     secret = secret if secret is not None else settings.jwt_secret
     expires_min = expires_min if expires_min is not None else settings.jwt_expires_min
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     claims: dict[str, Any] = {
         "sub": subject,
         "role": role,

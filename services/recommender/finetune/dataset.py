@@ -19,7 +19,7 @@ import json
 import random
 import sys
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -706,7 +706,7 @@ def _random_timestamp(rng: random.Random, season: str) -> datetime:
     year = rng.choice([2025, 2026])
     day = rng.randint(1, 28)
     hour = rng.randint(5, 21)
-    return datetime(year, month, day, hour, rng.randint(0, 59), tzinfo=timezone.utc)
+    return datetime(year, month, day, hour, rng.randint(0, 59), tzinfo=UTC)
 
 
 def _jitter_value(rng: random.Random, key: str, value: float) -> float:

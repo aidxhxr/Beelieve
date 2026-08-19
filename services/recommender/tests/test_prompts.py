@@ -1,7 +1,7 @@
 """Pure-logic tests for prompt construction (and the fallback that shares its context)."""
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from app.fallback import generate_fallback
@@ -161,7 +161,7 @@ def test_fallback_healthy_hive_gets_seasonal_advice() -> None:
          "anomaly_kind": "none", "anomaly_score": 0.0}
     )
     ctx["alerts"] = []
-    winter = datetime(2026, 1, 15, tzinfo=timezone.utc)
+    winter = datetime(2026, 1, 15, tzinfo=UTC)
     recs = generate_fallback(ctx, "en", now=winter)
     assert len(recs) == 1
     assert recs[0].priority == 5
@@ -171,13 +171,13 @@ def test_fallback_healthy_hive_gets_seasonal_advice() -> None:
 def test_fallback_no_data_at_all_still_answers() -> None:
     ctx = {"hive": {"id": "X"}, "apiary": {}, "reading": None,
            "prediction": None, "alerts": []}
-    recs = generate_fallback(ctx, "en", now=datetime(2026, 7, 1, tzinfo=timezone.utc))
+    recs = generate_fallback(ctx, "en", now=datetime(2026, 7, 1, tzinfo=UTC))
     assert len(recs) == 1
     assert recs[0].priority == 5
 
 
 def test_fallback_deterministic() -> None:
-    now = datetime(2026, 8, 18, tzinfo=timezone.utc)
+    now = datetime(2026, 8, 18, tzinfo=UTC)
     assert generate_fallback(full_context(), "en", now=now) == generate_fallback(
         full_context(), "en", now=now
     )

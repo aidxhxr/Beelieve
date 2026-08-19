@@ -7,7 +7,7 @@ shape as the model parser. Pure logic: no I/O, fully deterministic.
 """
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from app.parse import ParsedRecommendation
@@ -351,7 +351,7 @@ def generate_fallback(
     now: datetime | None = None,
 ) -> list[ParsedRecommendation]:
     """Deterministic recommendations from the shared context dict."""
-    now = now or datetime.now(timezone.utc)
+    now = now or datetime.now(UTC)
     reading: dict[str, Any] = ctx.get("reading") or {}
     prediction: dict[str, Any] = ctx.get("prediction") or {}
     alert_kinds = _alert_kinds(ctx)

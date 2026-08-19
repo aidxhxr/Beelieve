@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from datetime import date, datetime
-from enum import Enum
+from enum import StrEnum
 from typing import Any, Literal
 from uuid import UUID
 
@@ -15,7 +15,7 @@ Locale = Literal["en", "ru", "kk"]
 Role = Literal["beekeeper", "admin"]
 
 
-class Resolution(str, Enum):
+class Resolution(StrEnum):
     """Time resolution for the readings endpoint."""
 
     raw = "raw"

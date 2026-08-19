@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import deque
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 import pytest
@@ -21,7 +21,7 @@ from app.features import (
     weight_delta,
 )
 
-NOW = datetime(2026, 8, 18, 12, 0, 0, tzinfo=timezone.utc)
+NOW = datetime(2026, 8, 18, 12, 0, 0, tzinfo=UTC)
 
 
 def window_of(*entries: tuple[float, dict[str, Any]]) -> Window:

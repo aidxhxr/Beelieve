@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
 from pydantic import ValidationError
@@ -36,7 +36,7 @@ class TestTelemetryPayload:
         reading = TelemetryPayload.model_validate(FULL_PAYLOAD)
         assert reading.hive_id == "KZ-ALA-0042"
         assert reading.apiary_id == "apiary-almaty-01"
-        assert reading.ts == datetime(2026, 8, 18, 12, 0, 0, tzinfo=timezone.utc)
+        assert reading.ts == datetime(2026, 8, 18, 12, 0, 0, tzinfo=UTC)
         assert reading.audio_bands is not None
         assert reading.audio_bands["b100_200"] == pytest.approx(0.31)
         assert reading.co2_ppm == pytest.approx(4200.0)
@@ -68,8 +68,8 @@ class TestTelemetryPayload:
     def test_non_utc_offset_normalized_to_utc(self) -> None:
         payload = {**FULL_PAYLOAD, "ts": "2026-08-18T17:00:00+05:00"}
         reading = TelemetryPayload.model_validate(payload)
-        assert reading.ts == datetime(2026, 8, 18, 12, 0, 0, tzinfo=timezone.utc)
-        assert reading.ts.tzinfo == timezone.utc
+        assert reading.ts == datetime(2026, 8, 18, 12, 0, 0, tzinfo=UTC)
+        assert reading.ts.tzinfo == UTC
 
     @pytest.mark.parametrize(
         ("field", "value"),
@@ -117,7 +117,7 @@ class TestTelemetryPayload:
                 "weight_kg": 41.0,
             }
         )
-        ingested_at = datetime(2026, 8, 18, 12, 0, 3, tzinfo=timezone.utc)
+        ingested_at = datetime(2026, 8, 18, 12, 0, 3, tzinfo=UTC)
         record = reading.to_kafka_record(ingested_at)
         assert record["ingested_at"] == "2026-08-18T12:00:03.000Z"
         assert record["weight_kg"] == 41.0
@@ -128,7 +128,7 @@ class TestAlert:
     def test_alert_contract_round_trip(self) -> None:
         alert = Alert(
             hive_id="KZ-ALA-0042",
-            ts=datetime(2026, 8, 18, 12, 0, 5, tzinfo=timezone.utc),
+            ts=datetime(2026, 8, 18, 12, 0, 5, tzinfo=UTC),
             severity="warning",
             kind="sensor_offline",
             message="Hive went offline",
@@ -164,5 +164,5 @@ class TestAlert:
 
 def test_isoformat_utc_uses_z_suffix() -> None:
     assert isoformat_utc(
-        datetime(2026, 8, 18, 12, 0, 0, tzinfo=timezone.utc)
+        datetime(2026, 8, 18, 12, 0, 0, tzinfo=UTC)
     ) == "2026-08-18T12:00:00.000Z"

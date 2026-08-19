@@ -20,7 +20,8 @@ Timestamps are ISO-8601 strings; missing numeric fields are ``None``.
 """
 from __future__ import annotations
 
-from typing import Any, Iterable
+from collections.abc import Iterable
+from typing import Any
 
 SUPPORTED_LOCALES: dict[str, str] = {
     "en": "English",

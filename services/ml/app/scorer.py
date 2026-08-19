@@ -99,7 +99,7 @@ class MLScorer:
         }
 
     @classmethod
-    def load(cls, model_dir: Path, model_version: str) -> "MLScorer":
+    def load(cls, model_dir: Path, model_version: str) -> MLScorer:
         """Load the three boosters from MODEL_DIR, failing fast if any is absent."""
         import lightgbm as lgb  # imported here so tests with fakes need no lightgbm
 
@@ -146,7 +146,7 @@ class HeuristicScorer:
             raise ValueError(
                 f"feature vector has {len(vector)} values, expected {len(FEATURE_COLUMNS)}"
             )
-        features = dict(zip(FEATURE_COLUMNS, vector))
+        features = dict(zip(FEATURE_COLUMNS, vector, strict=False))
         is_anomaly, kind, score = heuristic_anomaly(features)
         return Scores(
             swarm_risk=heuristic_swarm_risk(features),

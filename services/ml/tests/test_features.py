@@ -80,7 +80,7 @@ class TestToFeatureVector:
     def test_full_message_maps_positionally(self) -> None:
         vector = to_feature_vector(enriched_msg())
         assert len(vector) == len(FEATURE_COLUMNS)
-        by_name = dict(zip(FEATURE_COLUMNS, vector))
+        by_name = dict(zip(FEATURE_COLUMNS, vector, strict=False))
         assert by_name["temp_brood_c"] == 34.8
         assert by_name["co2_ppm"] == 4200.0
         assert by_name["audio_b100_200"] == 0.31
@@ -96,14 +96,14 @@ class TestToFeatureVector:
     def test_partial_audio_bands(self) -> None:
         msg = enriched_msg()
         msg["audio_bands"] = {"b100_200": 0.4}
-        by_name = dict(zip(FEATURE_COLUMNS, to_feature_vector(msg)))
+        by_name = dict(zip(FEATURE_COLUMNS, to_feature_vector(msg), strict=False))
         assert by_name["audio_b100_200"] == 0.4
         assert by_name["audio_b200_300"] is None
         assert by_name["audio_b500_600"] is None
 
     def test_flat_band_keys_supported_for_export_format(self) -> None:
         msg = {"audio_b100_200": 0.35, "audio_b400_500": 0.2}
-        by_name = dict(zip(FEATURE_COLUMNS, to_feature_vector(msg)))
+        by_name = dict(zip(FEATURE_COLUMNS, to_feature_vector(msg), strict=False))
         assert by_name["audio_b100_200"] == 0.35
         assert by_name["audio_b400_500"] == 0.2
 
@@ -113,7 +113,7 @@ class TestToFeatureVector:
         msg["weight_kg"] = None
         msg["humidity_pct"] = True  # bool is not a measurement
         msg["co2_ppm"] = float("nan")
-        by_name = dict(zip(FEATURE_COLUMNS, to_feature_vector(msg)))
+        by_name = dict(zip(FEATURE_COLUMNS, to_feature_vector(msg), strict=False))
         assert by_name["temp_brood_c"] is None
         assert by_name["weight_kg"] is None
         assert by_name["humidity_pct"] is None
@@ -122,5 +122,5 @@ class TestToFeatureVector:
     def test_numeric_strings_are_coerced(self) -> None:
         msg = enriched_msg()
         msg["temp_brood_c"] = "34.1"
-        by_name = dict(zip(FEATURE_COLUMNS, to_feature_vector(msg)))
+        by_name = dict(zip(FEATURE_COLUMNS, to_feature_vector(msg), strict=False))
         assert by_name["temp_brood_c"] == 34.1

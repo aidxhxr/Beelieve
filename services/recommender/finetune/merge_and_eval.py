@@ -19,7 +19,7 @@ import json
 import os
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from statistics import mean
 
@@ -180,7 +180,7 @@ def main() -> None:
         )
 
     report = {
-        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": datetime.now(UTC).isoformat(),
         "base_model": args.base_model,
         "adapter": str(args.adapter),
         "n_examples": len(per_example),

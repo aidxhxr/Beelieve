@@ -1,9 +1,9 @@
 # Serving dependencies only — training deps live in finetune/requirements.txt
 # so the Docker image stays slim.
-fastapi>=0.111,<1.0
-uvicorn[standard]>=0.30,<1.0
-pydantic>=2.7,<3.0
-pydantic-settings>=2.3,<3.0
-psycopg[binary]>=3.1,<4.0
-psycopg-pool>=3.2,<4.0
-huggingface_hub>=0.24,<1.0
+fastapi>=0.141.1,<1.0
+uvicorn[standard]>=0.52.3,<1.0
+pydantic>=2.13.4,<3.0
+pydantic-settings>=2.15.0,<3.0
+psycopg[binary]>=3.3.4,<4.0
+psycopg-pool>=3.3.1,<4.0
+huggingface_hub>=1.27.0,<2.0

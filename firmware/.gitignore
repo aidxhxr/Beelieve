@@ -1,0 +1,12 @@
+# PlatformIO build output
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# Real credentials — never commit. Copy include/secrets.h.example instead.
+include/secrets.h
+
+# Editor
+.vscode/
+*.swp
+.DS_Store

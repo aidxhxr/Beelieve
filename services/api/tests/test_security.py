@@ -5,7 +5,6 @@ from __future__ import annotations
 import time
 
 import pytest
-
 from app.security import (
     TokenError,
     create_access_token,

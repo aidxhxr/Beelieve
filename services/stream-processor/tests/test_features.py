@@ -7,7 +7,6 @@ from datetime import UTC, datetime, timedelta
 from typing import Any
 
 import pytest
-
 from app.features import (
     FEATURE_NAMES,
     Window,

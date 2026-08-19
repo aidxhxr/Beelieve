@@ -1,0 +1,40 @@
+version: 2
+updates:
+  - package-ecosystem: pip
+    directories:
+      - /services/ingestion
+      - /services/simulator
+      - /services/stream-processor
+      - /services/ml
+      - /services/recommender
+      - /services/api
+    schedule:
+      interval: weekly
+    groups:
+      python-deps:
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: /frontend
+    schedule:
+      interval: weekly
+    groups:
+      frontend-deps:
+        patterns: ["*"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: docker
+    directories:
+      - /services/ingestion
+      - /services/simulator
+      - /services/stream-processor
+      - /services/ml
+      - /services/recommender
+      - /services/api
+      - /frontend
+    schedule:
+      interval: weekly

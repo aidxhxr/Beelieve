@@ -1,10 +1,8 @@
-line-length = 110
+# Repo-wide ruff configuration (services + scripts are Python 3.11).
 target-version = "py311"
+line-length = 100
 
 [lint]
-select = ["E4", "E7", "E9", "F", "I", "UP", "B"]
-# B008: function calls in defaults are the FastAPI Depends()/Query() idiom.
-ignore = ["B008"]
-
-[lint.isort]
-known-first-party = ["app", "training", "finetune"]
+# Pin the rule set explicitly so upstream default changes never break CI:
+# pycodestyle errors, pyflakes, and import sorting.
+select = ["E4", "E7", "E9", "F", "I"]

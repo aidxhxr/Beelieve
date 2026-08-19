@@ -8,7 +8,6 @@ from statistics import mean
 from typing import Any
 
 import pytest
-
 from app.hive import BAND_NAMES, HiveProfile, SimulatedHive
 
 # 07:00 UTC = midday-ish in Almaty (UTC+5): daylight, foragers out.

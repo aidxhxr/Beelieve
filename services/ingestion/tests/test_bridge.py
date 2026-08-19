@@ -8,7 +8,6 @@ from dataclasses import dataclass, field
 from typing import Any
 
 import pytest
-
 from app.bridge import Bridge, TopicInfo, parse_topic
 
 TELEMETRY_TOPIC = "beelieve/apiary-almaty-01/KZ-ALA-0042/telemetry"

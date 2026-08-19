@@ -5,9 +5,8 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 import pytest
-from pydantic import ValidationError
-
 from app.models import Alert, TelemetryPayload, isoformat_utc
+from pydantic import ValidationError
 
 FULL_PAYLOAD = {
     "hive_id": "KZ-ALA-0042",

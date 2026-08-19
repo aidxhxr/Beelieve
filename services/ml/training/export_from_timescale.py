@@ -38,8 +38,8 @@ from pathlib import Path
 
 import pandas as pd
 import psycopg
-
 from app.heuristics import heuristic_health_score
+
 from training.features import ANOMALY_KINDS, FEATURE_COLUMNS
 
 logger = logging.getLogger("training.export_from_timescale")

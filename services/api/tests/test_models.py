@@ -6,8 +6,6 @@ from datetime import UTC, datetime
 from uuid import uuid4
 
 import pytest
-from pydantic import ValidationError
-
 from app.models import (
     AckAlertRequest,
     AlertOut,
@@ -21,6 +19,7 @@ from app.models import (
     UserOut,
     WSEnvelope,
 )
+from pydantic import ValidationError
 
 NOW = datetime(2026, 8, 18, 12, 0, 0, tzinfo=UTC)
 

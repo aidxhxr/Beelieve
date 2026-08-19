@@ -14,13 +14,13 @@ from pathlib import Path
 from typing import Any, Protocol
 
 import numpy as np
+from training.features import ANOMALY_KINDS, FEATURE_COLUMNS
 
 from app.heuristics import (
     heuristic_anomaly,
     heuristic_health_score,
     heuristic_swarm_risk,
 )
-from training.features import ANOMALY_KINDS, FEATURE_COLUMNS
 
 
 class BoosterLike(Protocol):

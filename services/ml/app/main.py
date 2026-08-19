@@ -20,6 +20,7 @@ from typing import Any
 
 import numpy as np
 from confluent_kafka import Consumer, KafkaError, KafkaException, Message, Producer
+from training.features import to_feature_vector
 
 from app.config import Settings, get_settings
 from app.scorer import (
@@ -30,7 +31,6 @@ from app.scorer import (
     build_prediction_payload,
     derive_alerts,
 )
-from training.features import to_feature_vector
 
 logger = logging.getLogger("ml-inference")
 
